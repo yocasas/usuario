@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@layer base {
+  @font-face {
+    font-family: Niveau Grotesk;
+    src: url("../fonts/NiveauGroteskRegular.otf")
+  }
+
+  @font-face {
+    font-family: Niveau Grotesk-bold;
+    src: url("../fonts/NiveauGroteskBold.otf")
+  }
+
+  @font-face {
+    font-family: Niveau Grotesk-black;
+    src: url("../fonts/NiveauGroteskBlack.otf")
+  }
+
+  @font-face {
+    font-family: Niveau Grotesk-medium;
+    src: url("../fonts/NiveauGroteskMedium.otf")
+  }
+}
+
+/* @layer utilities {
+  .bg-slider_1 {
+    background-image: url("./slider_images/slider_mobile_1.jpg");
+  }
+} */
+
+.sr-only {
+  position: absolute !important; /* Outside the DOM flow */
+  height: 1px; width: 1px; /* Nearly collapsed */
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); /* IE 7+ only support clip without commas */
+  clip: rect(1px, 1px, 1px, 1px); /* All other browsers */
+}
+
+
+.label {
+  @apply uppercase tracking-wide font-semibold text-xs text-gray-900 mb-2 block;
+}
+
+.input {
+  @apply p-3 text-gray-800 border border-gray-300 rounded w-full;
+}
+
+.input::placeholder {
+  @apply text-gray-700;
+}
+
+.input:focus {
+  @apply shadow outline-none border-gray-400 duration-200 ease-linear;
+
+  box-shadow: 0 0 0 0.2rem theme("colors.gray.200");
+  background-clip: padding-box;
+}
+
+.input.select {
+   @apply appearance-none bg-white w-full;
+}
+
+.text-cyan {
+  color: #008F94
+}
+
+.bg-cyan {
+  background-color: #008F94;
+}
+
+.border-b-1 {
+    border-bottom-width: 1px;
+}
+
+.col-span-13 {
+  grid-column: span 34 / span 34;
+}
+
+body{
+  margin:0;
+  padding: 0;
+  font-family: sans-serif;
+  
+ }
+ 
+ input[type="checkbox"] + label span, input[type="radio"] + label span {
+     transition: background .2s,
+       transform .2s;
+ }
+ 
+ input[type="checkbox"]+ label span:hover, input[type="radio"] + label span:hover,
+ input[type="checkbox"]+ label:hover span, input[type="radio"] + label:hover span{
+   transform: scale(1.2);
+ } 
+ 
+ input[type="checkbox"]:checked + label span, input[type="radio"]:checked + label span {
+   background-color: #AFC6B3; 
+   box-shadow: 0px 0px 0px 2px white inset;
+ }
+
+ .error12 {
+   color:red;
+ }
+
+ .scroller {
+  width: 5px;
+  overflow-y: scroll;
+  scrollbar-color: #888 #f1f1f1;
+  scrollbar-width: thin;
+}
+
+
+.scroller:hover {
+  scrollbar-color: #555;
+}
+
+ input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+
+
+.around {
+  border-width: 2px;
+  --border-opacity: 1;
+    border-color: #C0E5D8;
+    border-color: rgba(192, 229, 216, var(--border-opacity));
+    padding: .1em;
+
+    height: 2rem/* 32px */;
+    width: 2rem/* 32px */;
+
+    --bg-opacity: 1;
+    background: #C0E5D8 content-box;
+    background-color: rgba(192, 229, 216, var(--bg-opacity));
+
+    --text-opacity: 1;
+    color: #455F5D;
+    color: rgba(69, 95, 93, var(--text-opacity));
+}
+
+.not-around {
+  --bg-opacity: 1;
+    background-color: #455F5D;
+    background-color: rgba(69, 95, 93, var(--bg-opacity));
+
+
+    height: 1.9rem/* 32px */;
+    width: 1.9rem/* 32px */;
+
+    --text-opacity: 1;
+    color: #C0E5D8;
+    color: rgba(192, 229, 216, var(--text-opacity));
+
+}
+
+/* disabled style for elements */
+.disabled {
+  
+
+  pointer-events: none;
+  opacity: 0.4;
+
+}
