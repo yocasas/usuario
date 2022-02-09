@@ -19,7 +19,7 @@
 
 
 
-  <title>Yô</title>
+  <title>Yô Pontuação</title>
 
   <script type="text/javascript" src="scripts/commonYo.js"></script>
   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
@@ -69,6 +69,8 @@ gtag('config', 'G-V0C85S2RG3');
         
       });
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.7/dayjs.min.js"></script>
+
   <script>
     function getHistory() {
       let data = {
@@ -95,15 +97,27 @@ gtag('config', 'G-V0C85S2RG3');
 
               let points = element.Amount
               let dateInserted = element.dateInserted
+              let dateInverted = dateInserted.split('-').reverse().join('-');
               let transactionClone = newTransaction.clone()
 
               let isAdd = (`${element["isAdd"]}` === 'true')
 
               if (!isAdd) {
-
-              } else {
                 points = "-" + element.Amount
+                transactionClone.find("#transactionSymbol").html("&#8595;")
+              } else {
+                points = "+" + element.Amount
+
+                
               }
+
+              const option = {
+                year: 'numeric',
+    month: ('long' || 'short' || 'numeric'),
+    day: 'numeric'
+              }
+              
+              transactionClone.find('#dateInserted').text(new Date(dateInverted).toLocaleDateString('pt-br', option));
               transactionClone.find('#pointsAmount').text(points);
 
               transactionClone.removeClass("hidden")
@@ -273,29 +287,33 @@ gtag('config', 'G-V0C85S2RG3');
         </div>
 
     </div>
-    <div id="transaction_show" class="py-5 px-10 w-2/4"> 
-      <div class="mb-6 py-4 border-green_medium text-2xl text-green_dark font-bold border-b">
-        Pontuação
-      </div>
-      <div id="newTransaction" class="border-b border-green_medium mb-6">
-      
-      <div class="flex flex-row justify-between">
-        <img class="w-10 h-10" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg">
-        <div class="font-bold text-green_dark" id="pointsAmount">
-          120
-          
-        </div>
-      </div>
-    </div>
-    </div>
-    
 
     
-
 </header>
-  
-</head>
 
+
+</head>
+<div class='flex justify-center mr-10 '>
+<div id="transaction_show" class=" py-5 px-10 w-full sm:w-2/4"> 
+    <div class="py-4 border-green_medium text-2xl text-green_dark font-bold border-b">
+      Pontuação
+    </div>
+    <div id="newTransaction" class="flex items-center hidden border-b border-green_medium h-2/5">
+    
+    <div class="flex flex-row w-full justify-between">
+      <div id="transactionSymbol" class="text-4xl text-green_dark">&#8593;</div>
+      <div id="dateInserted" class="text-lg text-green_dark"></div>
+
+      
+      <!-- <img class="w-10 h-10" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"> -->
+      <div class="font-bold text-green_dark" id="pointsAmount">
+        120
+        
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
 </body>
 
 </html>
