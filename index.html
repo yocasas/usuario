@@ -79,8 +79,15 @@
 
                 let newTransaction = $('#newTransaction')
                 let transactionShow = $("#transaction_show")
+                if (token != null) {
+                    let getUserPointsTotalUri = "https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/points/get"
+
+                    if (devMode) {
+                        getUserPointsTotalUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/points/get"
+                    }
+                }
                 $.ajax({
-                    url: "https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/points/get",
+                    url: getUserPointsTotalUri,
                     type: 'POST',
                     data: JSON.stringify(data),
                     headers: {
@@ -270,14 +277,14 @@
                     <a id="parentPoints" onclick="location.href='/usuario'"
                         class="flex justify-between text-base font-normal   cursor-pointer px-4 py-2 capitalize text-gray-700 hover:bg-green_light hover:text-black">
                         Pontuação: <div id="pointsUser" class="font-bold mx-10 sm:mx-0 text-green_medium text-xl"></div>
-                </a>
+                    </a>
 
                     <a href="/home" onclick="removeCookie()"
                         class="block px-4 py-2 text-base font-normal border-t border-green_light capitalize text-gray-700 hover:bg-green_light hover:text-black">
                         Log out
                     </a>
 
-                    
+
 
                 </div>
             </div>
@@ -300,7 +307,7 @@
                 <!-- <div id="transactionSymbol" class="text-4xl text-green_dark">&#8593;</div> -->
                 <div class="flex flex-row justify-between w-1/2">
                     <img id="transactionSymbol" src="assets/FLECHA_UP.svg" class="h-6 ">
-                    <img  src="assets/AVATAR.svg" class=" h-8 ">
+                    <img src="assets/AVATAR.svg" class=" h-8 ">
 
                     <div id="dateInserted" class="mr-10 text-sm text-green_medium"></div>
                 </div>
