@@ -140,15 +140,15 @@ let starsToPointsPerNight = function (multiplier) {
 function getUserPoints() {
     token = authCookie
     if (token != null) {
+        
+    }
+    return new Promise((resolve, reject) => {
+
         let getUserPointsUri = "https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/points/get/summary"
     
         if (devMode) {
             getUserPointsUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/points/get/summary"
         }
-    }
-    return new Promise((resolve, reject) => {
-
-
 
         let data = {}
         let clientObject = {}
