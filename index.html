@@ -79,13 +79,13 @@
 
                 let newTransaction = $('#newTransaction')
                 let transactionShow = $("#transaction_show")
-                if (token != null) {
+                
                     let getUserPointsTotalUri = "https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/points/get"
 
                     if (devMode) {
                         getUserPointsTotalUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/points/get"
                     }
-                }
+                
                 $.ajax({
                     url: getUserPointsTotalUri,
                     type: 'POST',
