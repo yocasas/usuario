@@ -33,6 +33,12 @@
 
     <header class="relative bg-no-repeat bg-cover p-10 md:p-4  z-5 bg-bottom lg:bg-center">
 
+
+        <script>
+            const urlParams = new URLSearchParams(window.location.search)
+            const searchClientId = urlParams.get('clientId')
+        </script>
+
         <script>
             function removeCookie() {
                 document.cookie = "login_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
@@ -72,20 +78,66 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.7/dayjs.min.js"></script>
 
         <script>
-            function getHistory() {
+            function getClientInfo(clientId, element) {
+                let getUserLoteUri =
+                    'https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/getuser/lote'
+                if (devMode) {
+                    getUserLoteUri =
+                        'https://wuixd5ec4b.execute-api.us-east-2.amazonaws.com/DEV/getuser/lote'
+                }
+
                 let data = {
-                    ClientId: clientInfo.ClientId,
+                    clientsArray: [clientId],
+                }
+
+                $.ajax({
+                    url: getUserLoteUri,
+                    type: 'POST',
+                    data: JSON.stringify(data),
+
+                    headers: {
+                        Authorization: authCookie,
+                    },
+                    contentType: 'application/json',
+
+                    success: function (x) {
+
+
+
+                        element.text(`Pontuação de ${x[0].firstname} ${x[0].lastname} [${clientId}]`)
+                        /*$(`li > #${element['ClientId']}`).after(
+                            `&emsp;<a class="underline" href="/onboarding/?userId=${element['ClientId']}"><h1 class="border-2 border-blue-800">${element['firstname']} ${element['lastname']}</h1></a><h1 class="border-2 border-blue-800">${element['email']}</h1> <h1 class="border-2 border-blue-800">${element['telNumber']}</h1><div class="w-10" id="${element['ClientId']}points"><button onclick="getTotalPointsUser('${element['ClientId']}')">Clique para informação sobre Pontos</button></div>`,
+                        */
+                    },
+                })
+
+            }
+
+
+
+
+            function getHistory() {
+
+                let clientIdSearch = clientInfo.ClientId
+
+                if (searchClientId != null && clientInfo.clientType > 2) {
+                    clientIdSearch = searchClientId
+                    getClientInfo(searchClientId, $("#points"))
+                }
+
+                let data = {
+                    ClientId: clientIdSearch,
                 }
 
                 let newTransaction = $('#newTransaction')
                 let transactionShow = $("#transaction_show")
-                
-                    let getUserPointsTotalUri = "https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/points/get"
 
-                    if (devMode) {
-                        getUserPointsTotalUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/points/get"
-                    }
-                
+                let getUserPointsTotalUri = "https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/points/get"
+
+                if (devMode) {
+                    getUserPointsTotalUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/points/get"
+                }
+
                 $.ajax({
                     url: getUserPointsTotalUri,
                     type: 'POST',
@@ -111,7 +163,8 @@
 
                                 if (!isAdd) {
                                     points = "-" + element.Amount
-                                    transactionClone.find("#transactionSymbol").attr("src", "assets/FLECHA_DOWN.svg")
+                                    transactionClone.find("#transactionSymbol").attr("src",
+                                        "assets/FLECHA_DOWN.svg")
                                 } else {
                                     points = "+" + element.Amount
 
@@ -124,7 +177,8 @@
                                     day: 'numeric'
                                 }
 
-                                transactionClone.find('#dateInserted').text(new Date(dateInverted).toLocaleDateString('pt-br', option));
+                                transactionClone.find('#dateInserted').text(new Date(dateInverted)
+                                    .toLocaleDateString('pt-br', option));
                                 transactionClone.find('#pointsAmount').text(points);
 
                                 transactionClone.removeClass("hidden")
@@ -298,7 +352,7 @@
 </head>
 <div class='flex justify-center mr-10 '>
     <div id="transaction_show" class=" py-5 px-10 w-full sm:w-2/4">
-        <div class="py-4 border-green_medium text-2xl text-green_dark font-bold border-b">
+        <div id="points" class="py-4 border-green_medium text-2xl text-green_dark font-bold border-b">
             Pontuação
         </div>
         <div id="newTransaction" class="flex items-center hidden border-b border-green_medium h-28">
