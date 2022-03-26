@@ -151,10 +151,16 @@
                         let dbResponse = data1
 
                         transactionShow.find(".show_transaction").remove()
+                        let dbResponseLen = dbResponse.Count
+                        let dbResponseItems = dbResponse.Items
+                        if (devMode) {
+                            dbResponseLen = dbResponse.length
+                            dbResponseItems = dbResponse
+                        } 
 
-                        if (dbResponse.length > 0) {
+                        if (dbResponseLen > 0) {
 
-                            dbResponse.forEach(element => {
+                            dbResponseItems.forEach(element => {
 
                                 let points = element.Amount
                                 let dateInserted = element.dateInserted
