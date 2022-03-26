@@ -135,6 +135,7 @@
                 let getUserPointsTotalUri = "https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/points/get"
 
                 if (devMode) {
+                    
                     getUserPointsTotalUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/points/get"
                 }
 
@@ -148,11 +149,12 @@
                     "contentType": "application/json",
                     success: function (data1, textStatus, jqXHR) {
                         let dbResponse = data1
+
                         transactionShow.find(".show_transaction").remove()
 
-                        if (dbResponse.Count > 0) {
+                        if (dbResponse.length > 0) {
 
-                            dbResponse.Items.forEach(element => {
+                            dbResponse.forEach(element => {
 
                                 let points = element.Amount
                                 let dateInserted = element.dateInserted
@@ -167,8 +169,6 @@
                                         "assets/FLECHA_DOWN.svg")
                                 } else {
                                     points = "+" + element.Amount
-
-
                                 }
 
                                 const option = {
