@@ -38,14 +38,31 @@
 
 <body class="absolute">
 
-    <div class="w-screen h-screen fixed hidden flex z-30" id="addRemovePoints">
+
+    <div class="w-screen h-10 fixed hidden  flex z-35" id="devModeShow">
+        <script>
+            $(document).ready(function () {
+                if (sessionStorage.getItem("devMode") == "yes") {
+                    $("#devModeShow").removeClass("hidden")
+                }
+            })
+        </script>
+        <div class="h-full ml-auto bg-blue-800  flex flex-col justify-around">
+            <p class="font-black text-white text-center align-middle">DEV MODE</p>
+        </div>
+
+    </div>
+
+    <div class="w-screen h-10 fixed hidden flex z-30" id="addRemovePoints">
         <div class="w-screen h-10 justify-around  self-bottom bg-yellow-300 flex">
             <div>
                 <label for="pointsInput">Points:</label>
                 <input type="number" id="pointsInput" min="0" name="pointsInput">
+                <label for="reasonInput">Motivo:</label>
+                <input type="text" id="reasonInput" name="reasonInput">
             </div>
-            <button class="bg-green-900 w-20" onclick="addPointsUser(true)">add</button>
-            <button class="bg-red-900 w-20" onclick="addPointsUser(false)">remove</button>
+            <button class="bg-green-900 w-20 font-black text-white" onclick="addPointsUser(true)">Adicionar</button>
+            <button class="bg-red-900 w-20 font-black text-white" onclick="addPointsUser(false)">Remover</button>
         </div>
     </div>
 
@@ -147,12 +164,15 @@
 
                     let addRemovePoints = $("#pointsInput").val()
 
+                    let reasonPoints = $("#reasonInput").val()
+
                     let data = {
                         ClientId: searchClientId,
                         "points": addRemovePoints,
+                        "reason": reasonPoints
                     }
 
-                    console.log(124)
+
                     $.ajax({
                         url: getUserPointsTotalUri + (isAdd ? "add" : "remove"),
                         type: 'POST',
@@ -227,11 +247,15 @@
                                     let isAdd = (`${element["isAdd"]}` === 'true')
 
                                     if (!isAdd) {
-                                        points = "-" + element.Amount
+                                        points = (element.reason !=
+                                                undefined ? ` ${element.reason} ` : " ") + "-" +
+                                            element.Amount
                                         transactionClone.find("#transactionSymbol").attr("src",
                                             "assets/FLECHA_DOWN.svg")
                                     } else {
-                                        points = "+" + element.Amount
+                                        points = (element.reason !=
+                                                undefined ? ` ${element.reason} ` : " ") + "+" +
+                                            element.Amount
                                     }
 
                                     const option = {
