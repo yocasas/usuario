@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disponibilizar datas</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <link rel="icon" type="image/svg" sizes="32x32" href="assets/LOGO.svg" />
+    <link rel="icon" type="image/svg" sizes="16x16" href="assets/LOGO.svg" />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/tailwind.css" />
+    <link rel="stylesheet" href="./assets/loading.css" />
+    <script type="text/javascript" src="/residence/js/commonYo.js"></script>
+
+
+    <script>
+        let beginDate;
+
+        let daysAhead;
+
+        let vue;
+        $(document).ready(function () {
+            dataToUpdate = {}
+            checkCurrentUser();
+            if (authCookie) {
+
+                var tokens = authCookie.split(".");
+                // console.log(atob(tokens[0])); //Alg, Type
+                var clientObject = JSON.parse(atob(tokens[1])) //Id, ClientType, Iat, exp
+
+                var clientId = clientObject.ClientId
+                getHomeInfo(clientId)
+            }
+        });
+
+    </script>
+</head>
+
+<body>
+    <script>
+
+
+
+
+
+
+
+
+    </script>
+    <header class="relative bg-no-repeat bg-cover p-10 md:p-4  z-5 bg-bottom lg:bg-center">
+        <div class="flex justify-center items-center">
+            <div class="flex items-center flex-wrap justify-center mb-6 md:mb-0">
+                <a href="/home">
+                    <h1>
+                        <span class="sr-only">Yo</span>
+                        <img src="assets/LOGO.svg" class="h-20 flex-1">
+
+                    </h1>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="hidden absolute bg-gray-900 bg-opacity-50 z-30 w-full h-full flex justify-center items-center">
+        <div class="loading dot-pulse">
+
+        </div>
+    </div>
+
+    <div class=" sm:items-center flex flex-col w-full ">
+        <div id='app'>
+            <v-calendar color="green" :attributes='attributes' :available-dates='avbldates' @dayclick='onDayClick'
+                :columns="$screens({ default: 1, lg: 2 })">
+            </v-calendar>
+            <!-- Add a column to display info for clicked day -->
+            <div v-if='days' class='selected-day'>
+                <div class="hidden" id="days_list">{{ days }}</div>
+                <div class="hidden" id="removeDays_list">{{ removeDays }}</div>
+
+
+
+                <!-- <ul>
+            <li v-for='day in days' :key='day.highlight'>
+              {{ day }}
+            </li>
+          </ul> -->
+            </div>
+        </div>
+        <div class="flex justify-center md:justify-end py-4">
+            <a onClick="formsRequest();" href="#"
+                class=" inline-flex next_step_1 hover:border-green_detail hover:bg-green_detail hover:bg- bg-green_light px-8 py-2 rounded-full  border-8 border-green_light  text-green_dark  items-center">Salvar alterações
+            </a>
+        </div>
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js'></script>
+
+    <!-- 2. Link VCalendar Javascript (Plugin automatically installed) -->
+    <script src='https://unpkg.com/v-calendar'></script>
+
+    <!--3. Create the Vue instance-->
+    <script>
+        let daysAheads = 30
+        beginDate = new Date()
+        beginDate.setDate(beginDate.getDate() + daysAheads)
+
+        const beginDateAvbl = new Date()
+        beginDateAvbl.setDate(beginDateAvbl.getDate() + daysAheads + 1)
+
+        const endDate = new Date("2023-01-31")
+
+        vue = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    selectedDay: null, // Add state to store selected day
+                    days: [],
+                    removeDays: new Set(),
+                    avbldates: [{ start: beginDateAvbl, end: endDate }] //TODO: Puxar do back as datas disponiveis
+                    //["2021-09-16T03:00:00.000Z"]
+                };
+            },
+            computed: {
+                dates() {
+                    return this.days.map(day => day.date);
+                },
+                attributes() {
+                    return this.dates.map(date => (
+
+                        {
+                            highlight: true,
+                            dates: date,
+                        }
+                    ));
+
+                },
+
+            },
+            methods: {
+                onDayClick(day) {
+                    
+                    const idx = this.days.findIndex(d => d.id === day.id);
+                    if (idx >= 0) {
+                        this.removeDays.add(day.id);
+                        this.days.splice(idx, 1);
+                    } else {
+
+                        if (this.days.length < 24) {
+
+                            if (day.date > beginDate && day.date < endDate) {  //TODO: colocar na variavel global
+
+                                this.days.push({
+                                    id: day.id,
+                                    date: day.date,
+                                })
+
+                                this.removeDays.delete(day.id);
+                            } else {
+                                { }
+                            }
+
+                        }
+                    }
+                },
+            },
+        })
+
+
+
+
+
+
+
+    </script>
+
+    <script>
+        function getHomeInfo(id) {
+
+            let data = {
+                "ClientId": id
+            }
+
+
+            data = JSON.stringify(data)
+
+            $('html, body').css({
+                overflow: 'hidden',
+                height: '100%'
+            });
+
+            $(".loading").parent().removeClass('hidden')
+            let getHomesDetaileduri = "https://of5h69nvm8.execute-api.us-east-1.amazonaws.com/dev/gethomes/detailed"
+
+if (devMode) {
+  getHomesDetaileduri = "https://5mpfn9a77j.execute-api.us-east-2.amazonaws.com/DEV/gethomes/detailed"
+}
+            $.ajax({
+                url: getHomesDetaileduri,
+                type: 'POST',
+                data: data,
+                headers: {
+                    'Authorization': authCookie,
+                },
+                "contentType": "application/json",
+                success: function (data1, textStatus, jqXHR) {
+                    let element = data1[0]
+                    dataToUpdate = element
+                    if (element != undefined) {
+
+                        if (`${element["availableDates"]}` != undefined && element["availableDates"].length !== 0) {
+                            $.each(element["availableDates"], function (i, val) {
+
+                                var dateArray = val.split("-");
+                                var year = dateArray[0];
+                                var month = parseInt(dateArray[1], 10) - 1;
+                                var date = dateArray[2];
+                                var _entryDate = new Date(year, month, date);
+
+
+                                let newDate = new Date(_entryDate)
+                                vue.onDayClick({ 'id': val, 'date': newDate })
+                            })
+                        }
+
+                    }
+
+
+                    curatedHouse = (`${element["curated"]}` === 'true')
+                    if (curatedHouse) {
+                        daysAhead = 0
+                    } else {
+                        daysAhead = 30
+                    }
+
+                    startDate = new Date()
+                    startDate.setDate(startDate.getDate() + daysAhead + 1)
+                    vue.$data.avbldates[0].start = startDate
+
+                    beginDate = new Date()
+                    beginDate.setDate(beginDate.getDate() + daysAhead)
+
+                    $('html, body').css({
+                        overflow: 'auto',
+                        height: 'auto'
+                    });
+                    $(".loading").parent().addClass('hidden')
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('html, body').css({
+                        overflow: 'auto',
+                        height: 'auto'
+                    });
+                    $(".loading").parent().addClass('hidden')
+
+                },
+            })
+        }
+
+
+
+        function formsRequest() {
+
+            var objForm = dataToUpdate
+
+            $('html, body').css({
+                overflow: 'hidden',
+                height: '100%'
+            });
+
+            $(".loading").parent().removeClass('hidden')
+
+            var daysObjectList = JSON.parse($("#days_list").html())
+            var daysList = daysObjectList.map(a => a.id);
+
+            var removeDaysObjectList = Array.from(vue.removeDays)
+
+            objForm["availableDates"] = daysList
+            objForm["removeDates"] = removeDaysObjectList
+
+
+            var tokens = authCookie.split(".");
+            // console.log(atob(tokens[0])); //Alg, Type
+            var clientObject = JSON.parse(atob(tokens[1])) //Id, ClientType, Iat, exp
+
+            var clientId = clientObject.ClientId
+
+            objForm["clientId"] = clientId
+
+            data = JSON.stringify(objForm)
+
+            let addHomeUri = "https://of5h69nvm8.execute-api.us-east-1.amazonaws.com/dev/addHome"
+
+          if (devMode) {
+            addHomeUri = "https://5mpfn9a77j.execute-api.us-east-2.amazonaws.com/DEV/addHome"
+          }
+
+            $.ajax({
+                url: addHomeUri,
+                type: 'POST',
+                data: data,
+                headers: {
+                    'Authorization': authCookie,
+                },
+                "contentType": "application/json",
+                success: function (data1, textStatus, jqXHR) {
+                    $('html, body').css({
+                        overflow: 'auto',
+                        height: 'auto'
+                    });
+                    $(".loading").parent().addClass('hidden')
+                    window.location.href = "/home";
+
+
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('html, body').css({
+                        overflow: 'auto',
+                        height: 'auto'
+                    });
+                    $(".loading").parent().addClass('hidden')
+
+                },
+            })
+        }
+    </script>
+
+</body>
+
+</html>
