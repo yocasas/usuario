@@ -62,7 +62,7 @@ function getCookie(name) {
 
 let checkCurrentUser = function () {
 
-    if (sessionStorage.getItem("devMode") == "yes") {
+    if (checkDevMode()) {
         devMode = true
     }
 
