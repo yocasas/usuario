@@ -192,11 +192,8 @@
             });
 
             $(".loading").parent().removeClass('hidden')
-            let getHomesDetaileduri = "https://of5h69nvm8.execute-api.us-east-1.amazonaws.com/dev/gethomes/detailed"
+            let getHomesDetaileduri = `${getCurrentHomeBaseUri()}/gethomes/detailed`
 
-if (devMode) {
-  getHomesDetaileduri = "https://5mpfn9a77j.execute-api.us-east-2.amazonaws.com/DEV/gethomes/detailed"
-}
             $.ajax({
                 url: getHomesDetaileduri,
                 type: 'POST',
@@ -291,11 +288,8 @@ if (devMode) {
 
             data = JSON.stringify(objForm)
 
-            let addHomeUri = "https://of5h69nvm8.execute-api.us-east-1.amazonaws.com/dev/addHome"
+            let addHomeUri = `${getCurrentHomeBaseUri()}/addHome`
 
-          if (devMode) {
-            addHomeUri = "https://5mpfn9a77j.execute-api.us-east-2.amazonaws.com/DEV/addHome"
-          }
 
             $.ajax({
                 url: addHomeUri,
