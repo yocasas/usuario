@@ -27,7 +27,7 @@
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/latest/js.cookie.min.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0C85S2RG3"></script>
 
@@ -39,15 +39,9 @@
 <body class="absolute">
     <div class="hidden absolute bg-gray-900 bg-opacity-50 z-30 w-full h-full flex justify-center items-center">
         <div class="loading dot-pulse">
-<<<<<<< HEAD
 
         </div>
     </div>
-=======
-    
-        </div>
-      </div>
->>>>>>> 1bdaf263119c83134489c3489895fcaba113a042
 
     <div class="flex justify-end">
         <h1 class="fixed z-50 my-64">
@@ -212,19 +206,11 @@
 
                 function getHistory() {
                     $('html, body').css({
-<<<<<<< HEAD
                         overflow: 'hidden',
                         height: '100%'
                     });
 
                     $(".loading").parent().removeClass('hidden')
-=======
-        overflow: 'hidden',
-        height: '100%'
-      });
-
-      $(".loading").parent().removeClass('hidden')
->>>>>>> 1bdaf263119c83134489c3489895fcaba113a042
 
                     let clientIdSearch = clientInfo.ClientId
 
@@ -309,34 +295,19 @@
                             }
 
 
-<<<<<<< HEAD
                             $('html, body').css({
                                 overflow: 'auto',
                                 height: 'auto'
                             });
                             $(".loading").parent().addClass('hidden')
-=======
-$('html, body').css({
-              overflow: 'auto',
-              height: 'auto'
-            });
-            $(".loading").parent().addClass('hidden')
->>>>>>> 1bdaf263119c83134489c3489895fcaba113a042
                         },
 
                         error: function (jqXHR, textStatus, errorThrown) {
                             $('html, body').css({
-<<<<<<< HEAD
                                 overflow: 'auto',
                                 height: 'auto'
                             });
                             $(".loading").parent().addClass('hidden')
-=======
-              overflow: 'auto',
-              height: 'auto'
-            });
-            $(".loading").parent().addClass('hidden')
->>>>>>> 1bdaf263119c83134489c3489895fcaba113a042
 
                         },
                     })
