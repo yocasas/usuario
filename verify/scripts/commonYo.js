@@ -228,7 +228,7 @@ function getUserPoints() {
 
     //TODO: Usar os headers e nao clientid como argumento
     data = JSON.stringify(data)
-    let getUserPointsUri = "https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/points/get/summary"
+    let getUserPointsUri = `${getCurrentUserBaseUri()}/points/get/summary`
 
     if (devMode) {
         getUserPointsUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/points/get/summary"

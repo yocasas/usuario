@@ -30,7 +30,7 @@
 
         data = JSON.stringify({'token':token});
 
-        let veriyTokenUri = 'https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/verifytoken'
+        let veriyTokenUri = '`${getCurrentUserBaseUri()}`/verifytoken'
             if (devMode) {
                 veriyTokenUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/verifytoken"
             }
@@ -71,7 +71,7 @@
             $("#errorPassword").addClass('hidden');
 
             var data = JSON.stringify({'password':password, 'token':token});
-            let updatePasswordUri = 'https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/updatepassword'
+            let updatePasswordUri = `${getCurrentUserBaseUri()}/updatepassword`
             if (devMode) {
                 updatePasswordUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/updatepassword"
             }
