@@ -149,7 +149,7 @@ function getUserPoints() {
     }
     return new Promise((resolve, reject) => {
 
-        let getUserPointsUri = "`${getCurrentUserBaseUri()}`/points/get/summary"
+        let getUserPointsUri = `${getCurrentUserBaseUri()}/points/get/summary`
     
         if (devMode) {
             getUserPointsUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/points/get/summary"
