@@ -39,16 +39,16 @@
 <body class="absolute">
     <div class="hidden absolute bg-gray-900 bg-opacity-50 z-30 w-full h-full flex justify-center items-center">
         <div class="loading dot-pulse">
-    
+
         </div>
-      </div>
+    </div>
 
     <div class="flex justify-end">
         <h1 class="fixed z-50 my-64">
-          <span class="sr-only">Badge Beta</span>
-          <img src="assets/badge_beta.svg" class="h-32">
+            <span class="sr-only">Badge Beta</span>
+            <img src="assets/badge_beta.svg" class="h-32">
         </h1>
-      </div>
+    </div>
 
 
     <div class="w-10 h-full fixed hidden  flex z-35" id="devModeShow">
@@ -97,6 +97,7 @@
             <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
             <link rel="stylesheet" href="./style/header.css">
             <script>
+                var Cookies2 = Cookies.noConflict()
                 window.dataLayer = window.dataLayer || [];
 
                 function gtag() {
@@ -106,14 +107,14 @@
 
 
                 gtag('config', 'G-V0C85S2RG3');
-                checkCurrentUser()
+                checkCurrentUser(Cookies2)
                 gtag('set', {
                     'id': clientInfo.ClientId.substring(7)
                 });
             </script>
             <script>
                 $(document).ready(() => {
-                    checkCurrentUser()
+                    checkCurrentUser(Cookies2)
                     changeUserName($(`#userNameDrop`))
                     getUserPoints().then(userPoints => {
                         $("#pointsUser").text(userPoints)
@@ -205,11 +206,11 @@
 
                 function getHistory() {
                     $('html, body').css({
-        overflow: 'hidden',
-        height: '100%'
-      });
+                        overflow: 'hidden',
+                        height: '100%'
+                    });
 
-      $(".loading").parent().removeClass('hidden')
+                    $(".loading").parent().removeClass('hidden')
 
                     let clientIdSearch = clientInfo.ClientId
 
@@ -246,13 +247,11 @@
 
                             let dbResponse = data1
 
+                            console.log(dbResponse)
+
                             transactionShow.find(".show_transaction").remove()
-                            let dbResponseLen = dbResponse.Count
-                            let dbResponseItems = dbResponse.Items
-                            if (devMode) {
-                                dbResponseLen = dbResponse.length
-                                dbResponseItems = dbResponse
-                            }
+                            dbResponseLen = dbResponse.length
+                            dbResponseItems = dbResponse
 
                             if (dbResponseLen > 0) {
 
@@ -267,13 +266,13 @@
 
                                     if (!isAdd) {
                                         points = (element.reason !=
-                                                undefined ? ` ${element.reason} ` : " ") + "-" +
+                                            undefined ? ` ${element.reason} ` : " ") + "-" +
                                             element.Amount
                                         transactionClone.find("#transactionSymbol").attr("src",
                                             "assets/FLECHA_DOWN.svg")
                                     } else {
                                         points = (element.reason !=
-                                                undefined ? ` ${element.reason} ` : " ") + "+" +
+                                            undefined ? ` ${element.reason} ` : " ") + "+" +
                                             element.Amount
                                     }
 
@@ -284,7 +283,7 @@
                                     }
 
                                     transactionClone.find('#dateInserted').text(new Date(
-                                            dateInverted)
+                                        dateInverted)
                                         .toLocaleDateString('pt-br', option));
                                     transactionClone.find('#pointsAmount').text(points);
 
@@ -296,19 +295,19 @@
                             }
 
 
-$('html, body').css({
-              overflow: 'auto',
-              height: 'auto'
-            });
-            $(".loading").parent().addClass('hidden')
+                            $('html, body').css({
+                                overflow: 'auto',
+                                height: 'auto'
+                            });
+                            $(".loading").parent().addClass('hidden')
                         },
 
                         error: function (jqXHR, textStatus, errorThrown) {
                             $('html, body').css({
-              overflow: 'auto',
-              height: 'auto'
-            });
-            $(".loading").parent().addClass('hidden')
+                                overflow: 'auto',
+                                height: 'auto'
+                            });
+                            $(".loading").parent().addClass('hidden')
 
                         },
                     })
