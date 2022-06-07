@@ -30,7 +30,7 @@
 
         data = JSON.stringify({'token':token});
 
-        let veriyTokenUri = '`${getCurrentUserBaseUri()}`/verifytoken'
+        let veriyTokenUri = `${getCurrentUserBaseUri()}/verifytoken`
             if (devMode) {
                 veriyTokenUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/verifytoken"
             }
