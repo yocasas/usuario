@@ -130,7 +130,7 @@
             <script>
                 function getClientInfo(clientId, element) {
                     let getUserLoteUri =
-                        'https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/getuser/lote'
+                        `${getCurrentUserBaseUri()}/getuser/lote`
                     if (devMode) {
                         getUserLoteUri =
                             'https://wuixd5ec4b.execute-api.us-east-2.amazonaws.com/DEV/getuser/lote'
@@ -166,7 +166,7 @@
 
                 function addPointsUser(isAdd) {
                     let getUserPointsTotalUri =
-                        "https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/points/"
+                        `${getCurrentUserBaseUri()}/points/`
 
                     if (devMode) {
 
@@ -227,7 +227,7 @@
                     let transactionShow = $("#transaction_show")
 
                     let getUserPointsTotalUri =
-                        "https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/points/get"
+                        "`${getCurrentUserBaseUri()}`/points/get"
 
                     if (devMode) {
 
