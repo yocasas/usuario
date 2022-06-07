@@ -22,7 +22,7 @@
     <script>
 
         function verifyEmail(clientId) {
-            let verifyEmailUri = 'https://044er6jwuc.execute-api.us-east-1.amazonaws.com/dev-2/verify?id='
+            let verifyEmailUri = `${getCurrentUserBaseUri()}/verify?id=`
             if (devMode) {
                 verifyEmailUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/verify?id="
             }
