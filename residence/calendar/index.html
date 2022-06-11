@@ -22,7 +22,6 @@
 
         let vue;
         $(document).ready(function () {
-            window.location = '/onboarding/';
 
             dataToUpdate = {}
             checkCurrentUser();
@@ -205,6 +204,10 @@
                 },
                 "contentType": "application/json",
                 success: function (data1, textStatus, jqXHR) {
+                    if (data1.length > 1) {
+                        window.location = '/onboarding/';
+
+                    }
                     let element = data1[0]
                     dataToUpdate = element
                     if (element != undefined) {
