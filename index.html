@@ -132,10 +132,6 @@
                 function getClientInfo(clientId, element) {
                     let getUserLoteUri =
                         `${getCurrentUserBaseUri()}/getuser/lote`
-                    if (devMode) {
-                        getUserLoteUri =
-                            'https://wuixd5ec4b.execute-api.us-east-2.amazonaws.com/DEV/getuser/lote'
-                    }
 
                     let data = {
                         clientsArray: [clientId],
@@ -169,10 +165,6 @@
                     let getUserPointsTotalUri =
                         `${getCurrentUserBaseUri()}/points/`
 
-                    if (devMode) {
-
-                        getUserPointsTotalUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/points/"
-                    }
 
 
                     let addRemovePoints = +$("#pointsInput").val()
@@ -230,10 +222,6 @@
                     let getUserPointsTotalUri =
                         `${getCurrentUserBaseUri()}/points/get`
 
-                    if (devMode) {
-
-                        getUserPointsTotalUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/points/get"
-                    }
 
                     $.ajax({
                         url: getUserPointsTotalUri,
