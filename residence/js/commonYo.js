@@ -169,10 +169,6 @@ function getUserPoints() {
         //TODO: Usar os headers e nao clientid como argumento
         data = JSON.stringify(data)
         let getUserUri = `${getCurrentUserBaseUri()}/getuser`
-
-          if (devMode) {
-            getUserUri = "https://wuixd5ec4b.execute-api.us-east-2.amazonaws.com/DEV/getuser"
-          }
         $.ajax({
             url: getUserUri,
             type: 'POST',

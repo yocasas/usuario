@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="icon" type="image/svg" sizes="32x32" href="assets/LOGO.svg" />
-    <link rel="icon" type="image/svg" sizes="16x16" href="assets/LOGO.svg" />
+    <link rel="icon" type="image/svg" sizes="32x32" href="/dashboard/Assets/logo_dark.svg" />
+    <link rel="icon" type="image/svg" sizes="16x16" href="/dashboard/Assets/logo_dark.svg" />
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./build/tailwind.css" />
     <link rel="stylesheet" href="./assets/loading.css" />
@@ -132,10 +132,6 @@
                 function getClientInfo(clientId, element) {
                     let getUserLoteUri =
                         `${getCurrentUserBaseUri()}/getuser/lote`
-                    if (devMode) {
-                        getUserLoteUri =
-                            'https://wuixd5ec4b.execute-api.us-east-2.amazonaws.com/DEV/getuser/lote'
-                    }
 
                     let data = {
                         clientsArray: [clientId],
@@ -169,10 +165,6 @@
                     let getUserPointsTotalUri =
                         `${getCurrentUserBaseUri()}/points/`
 
-                    if (devMode) {
-
-                        getUserPointsTotalUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/points/"
-                    }
 
 
                     let addRemovePoints = +$("#pointsInput").val()
@@ -230,10 +222,6 @@
                     let getUserPointsTotalUri =
                         `${getCurrentUserBaseUri()}/points/get`
 
-                    if (devMode) {
-
-                        getUserPointsTotalUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/points/get"
-                    }
 
                     $.ajax({
                         url: getUserPointsTotalUri,
@@ -324,7 +312,7 @@
                 <a href="/home/">
                     <div class="flex cursor-pointer row-start-1 col-start-1 items-center md:mx-10">
                         <div id="logo" class=" w-36" onclick="window.location.href='/home/'">
-                            <img src="assets/LOGO.svg" class="h-20 flex-1" alt="YoCasas">
+                            <img src="/dashboard/Assets/logo_dark.svg" class="h-20 flex-1" alt="YoCasas">
                         </div>
                     </div>
                 </a>

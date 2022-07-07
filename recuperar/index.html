@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar senha</title>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-    <link rel="icon" type="image/svg" sizes="32x32" href="assets/LOGO.svg" />
-    <link rel="icon" type="image/svg" sizes="16x16" href="assets/LOGO.svg" />
+    <link rel="icon" type="image/svg" sizes="32x32" href="/dashboard/Assets/logo_dark.svg" />
+    <link rel="icon" type="image/svg" sizes="16x16" href="/dashboard/Assets/logo_dark.svg" />
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./assets/tailwind.css" />
   <link rel="stylesheet" href="./assets/loading.css" />
@@ -31,9 +31,6 @@
         data = JSON.stringify({'token':token});
 
         let veriyTokenUri = `${getCurrentUserBaseUri()}/verifytoken`
-            if (devMode) {
-                veriyTokenUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/verifytoken"
-            }
         $.ajax({
             url: veriyTokenUri,
             type: 'POST',
@@ -72,9 +69,6 @@
 
             var data = JSON.stringify({'password':password, 'token':token});
             let updatePasswordUri = `${getCurrentUserBaseUri()}/updatepassword`
-            if (devMode) {
-                updatePasswordUri = "https://8e9nbq8rj1.execute-api.us-east-2.amazonaws.com/DEV/updatepassword"
-            }
             $.ajax({
                 url: updatePasswordUri,
                 type: 'POST',
@@ -123,7 +117,7 @@
             <a href="https://yocasas.com.br/home">
               <h1>
                 <span class="sr-only">Yo</span>
-                <img src="assets/LOGO.svg" class="h-20 flex-1">
+                <img src="/dashboard/Assets/logo_dark.svg" class="h-20 flex-1">
   
               </h1>
             </a>
