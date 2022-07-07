@@ -205,7 +205,9 @@
                 "contentType": "application/json",
                 success: function (data1, textStatus, jqXHR) {
                     if (data1.length > 1) {
-                        window.location = '/onboarding/';
+                        // window.location = '/onboarding/';
+                        window.location.href = `https://${window.location.hostname}/home/?calendarPage=true`
+
 
                     }
                     let element = data1[0]
