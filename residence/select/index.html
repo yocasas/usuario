@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecionar casa</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <link rel="icon" type="image/svg" sizes="32x32" href="/dashboard/Assets/logo_dark.svg" />
+    <link rel="icon" type="image/svg" sizes="16x16" href="/dashboard/Assets/logo_dark.svg" />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/tailwind.css" />
+    <link rel="stylesheet" href="./assets/loading.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/latest/js.cookie.min.js"></script>
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0C85S2RG3"></script>
+
+    <script src="/dashboard/js/commonYo.js"></script>
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+    
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-V0C85S2RG3');
+</script>
+
+<script>
+    let originPage
+
+function checkUrlOrigin(homeId) {
+  const urlParams = new URLSearchParams(window.location.search);
+  originPage = urlParams.get('originPage');
+  if (originPage != undefined && originPage != "") {
+
+    window.location.href = `${originPage}?homeId=${homeId}`
+
+    
+  }
+}
+
+    let houseList = []
+    let currentHomeInfo = {}
+    var Cookies2 = Cookies.noConflict()
+
+
+    $(document).ready(function () {
+
+        checkCurrentUser(Cookies2)
+
+    if (clientInfo != undefined) {
+          let dateNow = new Date();
+          let dateExp = new Date(clientInfo.exp * 1000);
+          console.log(dateNow)
+          console.log(dateExp)
+
+          if (dateExp > dateNow) {
+
+            getHomeInfo(clientInfo.ClientId)
+
+
+          }
+
+        }
+    });
+
+</script>
+</head>
+
+<body>
+    
+    <header class="relative bg-no-repeat bg-cover p-10 md:p-4  z-5 bg-bottom lg:bg-center">
+        <div class="flex justify-center items-center">
+            <div class="flex items-center flex-wrap justify-center mb-6 md:mb-0">
+                <a href="/home">
+                    <h1>
+                        <span class="sr-only">Yo</span>
+                        <img src="/dashboard/Assets/logo_dark.svg" class="h-20 flex-1">
+
+                    </h1>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="hidden absolute bg-gray-900 bg-opacity-50 z-30 w-full h-full flex justify-center items-center">
+        <div class="loading dot-pulse">
+
+        </div>
+    </div>
+
+    <!-- Escolher casa -->
+    <div id="chooseHomeForms" class='flex flex-col sm:px-56  md:col-span-1 h-full '>
+        <!-- Hidden -->
+        <div id="transaction_show" class=" py-5 w-full ">
+          <div id="points" class="py-4 border-green_medium text-2xl text-green_dark font-bold border-b">
+            Minhas Casas
+          </div>
+          <div id="newTransaction" class="hidden flex items-center border-b border-green_medium h-20">
+            <!-- hidden -->
+
+            <div class="flex flex-row w-full justify-between">
+              <!-- <div id="transactionSymbol" class="text-4xl text-green_dark">&#8593;</div> -->
+              <div class="flex flex-row  w-1/3">
+                <!-- <img id="imageHouse" src="assets/FLECHA_UP.svg" class="h-6 "> -->
+                <div class=" text-green_dark"> &#9679</div>
+
+                <div class="flex flex-col">
+                  <div id="oneHouseName" class="text-green_dark font-bold">Casa 1</div>
+                  <div id="oneHouseLocation" class="text-green_dark font-bold">Local</div>
+                </div>
+
+              </div>
+
+
+              <!-- <img class="w-10 h-10" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"> -->
+              <a id="house" class="cursor-pointer underline text-green_dark font-bold">Selecionar</a>
+
+            </div>
+
+          </div>
+
+        </div>
+        <!-- <div class="flex justify-center sm:justify-center py-4">
+
+          <a onclick="createNewHouse()"
+            class="hover:border-green_detail hover:bg-green_detail bg-green_light px-8 w-1/2 py-2 rounded-full  border-8 border-green_light  text-green_dark  text-center cursor-pointer">Adicionar
+            casa</a>
+        </div> -->
+      </div>
+      <!-- Escolher casa -->
+
+
+<script>
+    function getHomeInfo(id) {
+
+let data = {
+  "ClientId": id
+}
+
+var myCookie = Cookies2.get('login_session')
+if (myCookie) {
+  var tokens = myCookie.split(".");
+  // console.log(atob(tokens[0])); //Alg, Type
+  var clientObject = JSON.parse(atob(tokens[1])) //Id, ClientType, Iat, exp
+
+  var clientId = clientObject.ClientId
+  //objFormUser["ClientId"] = clientId
+
+}
+
+
+data = JSON.stringify(data)
+
+$('html, body').css({
+  overflow: 'hidden',
+  height: '100%'
+});
+
+$(".loading").parent().removeClass('hidden')
+
+let getHomesDetaileduri = `${getCurrentHomeBaseUri()}/gethomes/detailed`
+
+
+let newTransaction = $('#newTransaction')
+let transactionShow = $("#transaction_show")
+$.ajax({
+  url: getHomesDetaileduri,
+  type: 'POST',
+  data: data,
+  headers: {
+    'Authorization': myCookie,
+  },
+  "contentType": "application/json",
+  success: function (data1, textStatus, jqXHR) {
+    houseList = data1
+    let dbResponse = data1
+
+    transactionShow.find(".show_transaction").remove()
+
+    dbResponseLen = dbResponse.length
+    dbResponseItems = dbResponse
+
+    console.log(dbResponse)
+    let counter = 0
+    if (dbResponseLen > 0) {
+
+      dbResponseItems.forEach(element => {
+
+        let transactionClone = newTransaction.clone()
+
+
+
+
+
+
+        transactionClone.find('#oneHouseName').attr("id", "oneHouseName" + counter)
+        transactionClone.find('#oneHouseName' + counter).text(element["nickName"]);
+
+        transactionClone.find('#oneHouseLocation').attr("id", "oneHouseLocation" + counter)
+        transactionClone.find('#oneHouseLocation' + counter).text(element["city"]);
+
+        transactionClone.find('#house').attr("id", "house" + counter)
+        transactionClone.find('#house' + counter).attr("onClick", 'selectHouse(this)')
+
+        // transactionClone.find('#imageHouse').attr("id", "imageHouse" + counter)
+        // transactionClone.find('#imageHouse' + counter).attr("src", )
+
+
+
+
+        transactionClone.removeClass("hidden")
+        transactionClone.addClass("show_transaction")
+        transactionClone.attr("id", "show_transaction")
+        transactionShow.append(transactionClone)
+        counter++
+      })
+    }
+
+    
+    $('html, body').css({
+      overflow: 'auto',
+      height: 'auto'
+    });
+    $(".loading").parent().addClass('hidden')
+    //   }
+  },
+  error: function (jqXHR, textStatus, errorThrown) {
+    $('html, body').css({
+      overflow: 'auto',
+      height: 'auto'
+    });
+    $(".loading").parent().addClass('hidden')
+
+  },
+})
+
+}
+
+//Function used in the "Editar" button for each home in the list of homes
+function selectHouse(element) {
+      let houseIndex = element.id.slice(5)
+      
+      currentHomeInfo = houseList[houseIndex]
+
+      checkUrlOrigin(currentHomeInfo.homeId)
+
+
+
+    }
+</script>
+</body>
+
+</html>
